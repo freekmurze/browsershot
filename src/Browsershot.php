@@ -907,6 +907,13 @@ class Browsershot
             $command['options']['scale'] = $this->scale;
         }
 
+        if ($this->additionalOptions['fullPage'] ?? false) {
+            $heightPx = $this->callBrowser($this->createCommand($url, 'evaluate', ['pageFunction' => 'document.body.scrollHeight']));
+            $widthPx = $this->callBrowser($this->createCommand($url, 'evaluate', ['pageFunction' => 'document.body.scrollWidth']));
+            $command['options']['height'] = $heightPx;
+            $command['options']['width'] = $widthPx;
+        }
+
         return $command;
     }
 
