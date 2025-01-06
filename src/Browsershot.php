@@ -77,6 +77,8 @@ class Browsershot
         'view-source',
     ];
 
+    protected string $deniedUrlsRegex = '^file:(?!//\/tmp/).*';
+
     public static function url(string $url): static
     {
         return (new static)->setUrl($url);
@@ -101,6 +103,13 @@ class Browsershot
         }
 
         $this->imageManipulations = new ImageManipulations;
+    }
+
+    public function setDeniedUrlsRegex(string $deniedUrlsRegex): static
+    {
+        $this->deniedUrlsRegex = $deniedUrlsRegex;
+
+        return $this;
     }
 
     public function setNodeBinary(string $nodeBinary): static
@@ -306,10 +315,8 @@ class Browsershot
 
     public function setHtml(string $html): static
     {
-        foreach ($this->unsafeProtocols as $protocol) {
-            if (str_contains(strtolower($html), $protocol)) {
-                throw HtmlIsNotAllowedToContainFile::make();
-            }
+        if (str_contains(strtolower($html), 'view-source:')) {
+            throw HtmlIsNotAllowedToContainFile::make();
         }
 
         $this->html = $html;
@@ -1012,6 +1019,10 @@ class Browsershot
 
         if ($this->proxyServer) {
             $args[] = '--proxy-server='.$this->proxyServer;
+        }
+
+        if ($this->deniedUrlsRegex) {
+            $args[] = '--chromium-deny-list='.$this->deniedUrlsRegex;
         }
 
         return $args;

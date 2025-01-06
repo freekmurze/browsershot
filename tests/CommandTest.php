@@ -24,7 +24,7 @@ it('can create a command to generate a screenshot', function () {
                 'width' => 1920,
                 'height' => 1080,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -50,7 +50,7 @@ it('can create a command to generate a screenshot and omit the background', func
                 'width' => 1920,
                 'height' => 1080,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -82,7 +82,7 @@ it('can create a command to generate a pdf', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -115,7 +115,7 @@ it('can create a command to generate a pdf with tags', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -148,7 +148,7 @@ it('can create a command to generate a pdf with a custom header', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -181,7 +181,7 @@ it('can create a command to generate a pdf with a custom footer', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -214,7 +214,7 @@ it('can create a command to generate a pdf with the header hidden', function () 
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -247,7 +247,7 @@ it('can create a command to generate a pdf with the footer hidden', function () 
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -275,7 +275,7 @@ it('can create a command to generate a pdf with paper format', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });
@@ -295,7 +295,7 @@ it('can use given user agent', function () {
                 'height' => 600,
             ],
             'userAgent' => 'my_special_snowflake',
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -316,7 +316,7 @@ it('can set emulate media option', function () {
                 'height' => 600,
             ],
             'emulateMedia' => 'screen',
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -337,7 +337,7 @@ it('can set emulate media option to null', function () {
                 'height' => 600,
             ],
             'emulateMedia' => null,
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -360,7 +360,7 @@ it('can set emulate media features', function () {
                 'height' => 600,
             ],
             'emulateMediaFeatures' => '[{"name":"prefers-color-scheme","value":"dark"}]',
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -381,7 +381,7 @@ it('can use pipe', function () {
                 'height' => 600,
             ],
             'pipe' => true,
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);

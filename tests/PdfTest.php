@@ -113,7 +113,7 @@ it('can generate a pdf with custom paper size unit', function () {
             ],
             'width' => '8.3in',
             'height' => '11.7in',
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
         ],
     ], $command);
 });

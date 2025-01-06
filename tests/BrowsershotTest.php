@@ -5,7 +5,6 @@ use Spatie\Browsershot\ChromiumResult;
 use Spatie\Browsershot\Exceptions\CouldNotTakeBrowsershot;
 use Spatie\Browsershot\Exceptions\ElementNotFound;
 use Spatie\Browsershot\Exceptions\FileUrlNotAllowed;
-use Spatie\Browsershot\Exceptions\HtmlIsNotAllowedToContainFile;
 use Spatie\Browsershot\Exceptions\UnsuccessfulResponse;
 use Spatie\Image\Enums\Fit;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -73,17 +72,9 @@ it('will not allow a file url that has leading spaces', function () {
     Browsershot::url('    file://test');
 })->throws(FileUrlNotAllowed::class);
 
-it('will not allow html to contain file://', function () {
-    Browsershot::html('<h1><img src="file://" /></h1>');
-})->throws(HtmlIsNotAllowedToContainFile::class);
-
 it('will not allow a slightly malformed file url', function () {
     Browsershot::url('file:/test');
 })->throws(FileUrlNotAllowed::class);
-
-it('will not allow html to contain file:/', function () {
-    Browsershot::html('<h1><img src="file:/" /></h1>');
-})->throws(HtmlIsNotAllowedToContainFile::class);
 
 it('no redirects - will not follow redirects', function () {
     $targetPath = __DIR__.'/temp/redirect_fail.pdf';
@@ -197,7 +188,7 @@ it('can run without sandbox', function () {
                 'height' => 600,
             ],
             'args' => [
-                '--no-sandbox',
+                '--no-sandbox', '--chromium-deny-list=^file:(?!//\/tmp/).*',
             ],
             'type' => 'png',
         ],
@@ -219,7 +210,7 @@ it('can dismiss dialogs', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -240,7 +231,7 @@ it('can disable javascript', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -261,7 +252,7 @@ it('can disable images', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -282,7 +273,7 @@ it('can disable capture urls', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -309,7 +300,7 @@ it('can block urls', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -336,7 +327,7 @@ it('can block domains', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -357,7 +348,7 @@ it('can ignore https errors', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -377,7 +368,8 @@ it('can use a proxy server', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => ['--proxy-server=1.2.3.4:8080'],
+            'args' => ['--proxy-server=1.2.3.4:8080', '--chromium-deny-list=^file:(?!//\/tmp/).*',
+            ],
             'type' => 'png',
         ],
     ], $command);
@@ -403,7 +395,7 @@ it('can set arbitrary options', function () {
                 'bar' => 150,
                 'baz' => 200,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -435,7 +427,7 @@ it('can wait until network idle', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -454,7 +446,7 @@ it('can wait until network idle', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -475,7 +467,7 @@ it('can send extra http headers', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -496,7 +488,7 @@ it('can send extra navigation http headers', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -517,7 +509,7 @@ it('can authenticate', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -555,7 +547,7 @@ it('can send cookies', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -576,7 +568,7 @@ it('can send post request', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -619,7 +611,7 @@ it('can click on the page', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -647,7 +639,7 @@ it('can add a timeout to puppeteer', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -670,7 +662,7 @@ it('can add a wait for function to puppeteer', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -691,7 +683,7 @@ it('can add a wait for selector', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -713,7 +705,7 @@ it('can add a wait for selector and provide options', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -753,7 +745,7 @@ it('can input form fields and post and get the body html', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -793,7 +785,7 @@ it('can input form fields and post to ssl and get the body html', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -832,7 +824,7 @@ it('can change select fields and post and get the body html', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
         ],
     ], $command);
@@ -854,6 +846,7 @@ it('will auto prefix chromium arguments', function () {
             ],
             'args' => [
                 '--please-autoprefix-me',
+                '--chromium-deny-list=^file:(?!//\/tmp/).*',
             ],
             'type' => 'png',
         ],
@@ -882,6 +875,7 @@ it('will allow many chromium arguments', function () {
                 '--my-custom-arg',
                 '--another-argument=some-value',
                 '--yet-another-arg=foo',
+                '--chromium-deny-list=^file:(?!//\/tmp/).*',
             ],
             'type' => 'png',
         ],
@@ -905,6 +899,7 @@ it('will set user data dir arg flag', function () {
             ],
             'args' => [
                 "--user-data-dir={$dataDir}",
+                '--chromium-deny-list=^file:(?!//\/tmp/).*',
             ],
             'type' => 'png',
         ],
@@ -926,7 +921,7 @@ it('will allow passing environment variables', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
             'env' => [
                 'TZ' => 'Pacific/Auckland',
@@ -967,7 +962,7 @@ it('will allow passing a content url', function () {
                 'width' => 800,
                 'height' => 600,
             ],
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'type' => 'png',
             'displayHeaderFooter' => false,
             'contentUrl' => 'https://example.com',
@@ -1016,7 +1011,7 @@ it('should set the new headless flag when using the new method', function () {
             'newHeadless' => true,
             'type' => 'png',
             'path' => 'screenshot.png',
-            'args' => [],
+            'args' => ['--chromium-deny-list=^file:(?!//\/tmp/).*'],
             'viewport' => [
                 'width' => 800,
                 'height' => 600,
